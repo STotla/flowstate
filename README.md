@@ -5,7 +5,7 @@ This is a Laravel-based application. Follow the steps below to set up and run th
 
 ## Prerequisites
 Ensure you have the following installed:
-* **PHP** (>= 8.1 recommended)
+* **PHP** (>= 8.3 recommended)
 * **Composer**
 * **Node.js & NPM**
 
