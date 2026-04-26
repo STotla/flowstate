@@ -15,11 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @role('Admin|SuperAdmin')
+                        <x-nav-link :href="route('shorturls.index')" :active="request()->routeIs('shorturls.index')">
+                            {{ __('Short URLs') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="ml-3 relative">
+                    <button class="bg-gray-800 text-white px-3 rounded-md text-sm font-medium">
+                        <div>{{ Auth::user()->getRoleNames()->first()}}</div>
+                    </button>
+                    </div>
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">

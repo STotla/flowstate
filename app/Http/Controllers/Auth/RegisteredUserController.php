@@ -18,9 +18,15 @@ class RegisteredUserController extends Controller
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
-        return view('auth.register');
+        
+
+        return view('auth.register', [
+            'email' => $request->query('email'),
+            'role' => $request->query('role'),
+            'company_id' => $request->query('company_id'),
+        ]);
     }
 
     /**
@@ -30,17 +36,20 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'company_id' => $request->company_id,
             'password' => Hash::make($request->password),
         ]);
+         $user->assignRole($request->query('role'));
 
         event(new Registered($user));
 
