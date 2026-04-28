@@ -48,7 +48,7 @@ class ShorturlController extends Controller
             'original_url' => 'required|url',
         ]);
         $companyName = auth()->user()->company->name;
-        $clean = Str::of($companyName)->replace(' ', '')->lower();
+        $clean = Str::of($companyName)->replace(' ', '')->lower()->substr(0, 20);
         do {
             $shortCode = $clean . '-' . Str::lower(Str::random(6));
         } while (Shorturl::where('short_url', $shortCode)->exists());
